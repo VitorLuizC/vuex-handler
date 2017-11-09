@@ -5,7 +5,7 @@
  * @example ```js
  * new Vuex.Store({ plugins: [ handler ], ... })
  * ```
- * @param {Vuex.Store} store 
+ * @param {Vuex.Store} store
  */
 var install = function (store) {
   var original = store.dispatch;
@@ -17,9 +17,8 @@ var install = function (store) {
     while ( len-- > 0 ) params[ len ] = arguments[ len + 1 ];
 
     var action = original.apply(store, [ type ].concat( params ));
-    var ref = store.handler[type] || store.handler;
-    var onFailure = ref.onFailure;
-    var onSuccess = ref.onSuccess;
+    var onFailure = store.handler[type].onFailure || store.handler.onFailure;
+    var onSuccess = store.handler[type].onSuccess || store.handler.onSuccess;
 
     action
       .then(function (result) { return Promise.resolve(

@@ -56,7 +56,7 @@ store.handler = {
     Rollbar.error(`Action ${type}`, error)
   },
 
-  // Specific handlers overwrite global handlers and work exactly like them
+  // Specific handlers overrides global handlers and work exactly like them
   [types.USER_SIGNIN]: {
     onSuccess (result, type, params, options) {
       ...

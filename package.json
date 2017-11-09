@@ -1,6 +1,6 @@
 {
   "name": "vuex-handler",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Avoid try/catch and .catch() statements and globally handle successful and failed actions.",
   "main": "dist/vuex-handler.common.js",
   "repository": "https://github.com/VitorLuizC/vuex-handler.git",

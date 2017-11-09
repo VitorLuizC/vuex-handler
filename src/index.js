@@ -3,7 +3,7 @@
  * @example ```js
  * new Vuex.Store({ plugins: [ handler ], ... })
  * ```
- * @param {Vuex.Store} store 
+ * @param {Vuex.Store} store
  */
 const install = (store) => {
   const original = store.dispatch
@@ -12,7 +12,8 @@ const install = (store) => {
 
   store.dispatch = (type, ...params) => {
     const action = original.apply(store, [ type, ...params ])
-    const { onFailure, onSuccess } = store.handler[type] || store.handler
+    const onFailure = store.handler[type].onFailure || store.handler.onFailure
+    const onSuccess = store.handler[type].onSuccess || store.handler.onSuccess
 
     action
       .then((result) => Promise.resolve(
