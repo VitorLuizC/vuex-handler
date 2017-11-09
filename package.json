@@ -4,7 +4,11 @@
   "description": "Avoid try/catch and .catch() statements and globally handle successful and failed actions.",
   "main": "dist/vuex-handler.common.js",
   "repository": "https://github.com/VitorLuizC/vuex-handler.git",
-  "author": "Vitor Cavalcanti <vitorluizc@outlook.com>",
+  "author": {
+    "name": "Vitor Cavalcanti",
+    "email": "vitorluizc@outlook.com",
+    "url": "https://vitorluizc.github.io/"
+  },
   "license": "MIT",
   "scripts": {
     "test": "standard src/index.js",
