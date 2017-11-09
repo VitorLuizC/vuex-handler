@@ -1,0 +1,5 @@
+# Node.js modules
+node_modules/
+
+# MacOSX finder changes
+.DS_Store
