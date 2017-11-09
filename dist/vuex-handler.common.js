@@ -17,8 +17,9 @@ var install = function (store) {
     while ( len-- > 0 ) params[ len ] = arguments[ len + 1 ];
 
     var action = original.apply(store, [ type ].concat( params ));
-    var onFailure = store.handler[type].onFailure || store.handler.onFailure;
-    var onSuccess = store.handler[type].onSuccess || store.handler.onSuccess;
+    var specific = store.handler[type] || {};
+    var onFailure = specific.onFailure || store.handler.onFailure;
+    var onSuccess = specific.onSuccess || store.handler.onSuccess;
 
     action
       .then(function (result) { return Promise.resolve(
