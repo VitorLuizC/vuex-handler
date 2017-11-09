@@ -1,0 +1,5 @@
+# Default line-ending
+* text=auto eol=lf
+
+# Since 1.0 version Yarn already fix merges
+yarn.lock -diff
