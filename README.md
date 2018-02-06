@@ -1,39 +1,71 @@
 # Vuex-Handler
 
 Avoid `try/catch` or `.catch(error => ...)` and globally handle successful and
-failed actions like the example below.
+failed actions.
+
+## Install
+
+- Install using `npm` or `yarn`.
+
+  ```sh
+  npm i vuex-handler
+
+  # or using yarn
+  yarn add vuex-handler
+  ```
+
+- Add to Vuex plugins.
+
+  ```js
+  import Vuex from 'vuex'
+  import handler from 'vuex-handler'
+
+  const store = new Vuex.Store({
+    plugins: [ handler ]
+  })
+  ```
+
+## Usage
 
 ```js
-...
+const store = new Vuex.Store({
+  plugins: [ handler ],
 
-// Here some pretty actions without error handlers
-export const actions = {
-  [types.USER]: async ({ commit }, payload) => {
-    const { data: user } = await axios.get(`/user/${payload.id}`)
-    commit(types.USER, user)
-  },
-  [types.USER_SIGNIN]: async ({ dispatch }, payload) => {
-    const { data: id } = await axios.post('/sign-in', payload)
-    dispatch(types.USER, { id })
-  },
-  [types.USER_SIGNON]: async ({ dispatch }, payload) => {
-    const { data: user } = await axios.post('/sign-in', payload)
-    dispatch(types.USER, user)
-  },
-  ...
+  ...,
+
+  actions: {
+    authenticate: async ({ commit }, payload) => {
+      const { email, password } = payload || {}
+      const { data: token } = await axios.get('/auth', { email, password })
+      return token
+    }
+  }
+}
+
+// This logs all sucessed actions.
+store.handler.onSuccess = (result, type, params) => {
+  console.log(result) // 'eyJhb...' 'authenticate' { email: '...', password: '...' }
+  return result
+}
+
+// This logs all failed actions.
+store.handler.onFailure = (error, type, params) => {
+  console.log(error) // Error 'authenticate' { email: '...', password: '...' }
+  throw error
+}
+
+// Alerts authenticate errors
+// Don't use alerts, please.
+store.handler.authenticate.onFailure = (error) => {
+  alert('Error on authenticate: ' + error.message)
+  return false
 }
 ```
 
+## Real world example
+
 ```js
 ...
-
-import Vuex from 'vuex'
-import handler from 'vuex-handler'
-
-const store = new Vuex.Store({
-  mixins: [ handler ],
-  modules: { user }
-})
 
 // Those handlers are dispatch interceptors that run when it finishes or fail
 store.handler = {
